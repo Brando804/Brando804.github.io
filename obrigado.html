@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obrigado pelo contato</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:Poppins, sans-serif;
+    background:#969696;
+    color:#111;
+    overflow-x:hidden;
+}
+
+/* Faixa lateral vermelha */
+.left-bar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:90px;
+    height:100vh;
+    background:#b30000;
+}
+
+/* Shape diagonal escuro */
+.diagonal{
+    position:absolute;
+    top:0;
+    left:0;
+    width:65%;
+    height:100%;
+    background:#111;
+    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+    z-index:0;
+}
+
+.container{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-left:120px;
+}
+
+/* Card principal */
+.card{
+    position:relative;
+    z-index:2;
+    max-width:700px;
+}
+
+.subtitle{
+    color:#bbb;
+    letter-spacing:4px;
+    font-weight:300;
+    margin-bottom:15px;
+}
+
+h1{
+    color:#fff;
+    font-size:52px;
+    line-height:1.1;
+    margin-bottom:20px;
+}
+
+p{
+    color:#ddd;
+    font-size:18px;
+    line-height:1.6;
+    margin-bottom:40px;
+}
+
+/* Botões */
+.buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:16px 28px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:#b30000;
+    color:#fff;
+}
+.btn-primary:hover{background:#8d0000}
+
+.btn-outline{
+    border:2px solid #fff;
+    color:#fff;
+}
+.btn-outline:hover{
+    background:#fff;
+    color:#111;
+}
+
+/* Ícone check */
+.check{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#b30000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:30px;
+    font-size:40px;
+    color:#fff;
+}
+
+@media(max-width:900px){
+    .diagonal{width:100%;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+    .container{padding:40px}
+    h1{font-size:36px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="left-bar"></div>
+<div class="diagonal"></div>
+
+<div class="container">
+  <div class="card">
+      
+      <div class="check">✓</div>
+      <div class="subtitle">MENSAGEM ENVIADA</div>
+      <h1>Obrigado pelo seu contato!</h1>
+
+      <p>
+        Recebemos sua mensagem com sucesso.  
+        Nossa equipe já foi notificada e retornará o mais breve possível.
+      </p>
+
+      <div class="buttons">
+        <a href="https://uniferro.ind.br" class="btn btn-primary">Voltar ao site</a>
+      </div>
+
+  </div>
+</div>
+
+</body>
+</html>
