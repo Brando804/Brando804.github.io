@@ -338,7 +338,7 @@ com a Uniferro</p>
     </div>
     <div class="contact__form" id="fale-conosco">
         <form action="https://formspree.io/f/xjkwzlvb" method="POST" id="info" class="form js-validate-form js-send-contact">
-            <input type="hidden" name="_redirect" value="https://uniferro.ind.br/obrigado.html">
+            <input type="hidden" name="_next" value="https://uniferro.ind.br/obrigado.html">
             <div class="form__row">
                 <div class="form__col">
                     <div class="wrapper">
@@ -979,6 +979,24 @@ respondida o mais breve poss&iacute;vel.&nbsp;&nbsp; * Campos obrigat&oacute;rio
  
 
     
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const targetNode = document.querySelector('.js-response-success');
+            if (targetNode) {
+                const observer = new MutationObserver(function(mutationsList, observer) {
+                    for(const mutation of mutationsList) {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            const displayStyle = window.getComputedStyle(targetNode).display;
+                            if (displayStyle === 'block' || displayStyle === 'inline' || targetNode.style.display === 'block') {
+                                window.location.href = "https://uniferro.ind.br/obrigado.html";
+                            }
+                        }
+                    }
+                });
+                observer.observe(targetNode, { attributes: true });
+            }
+        });
+    </script>
 </body>
 
 </html>
