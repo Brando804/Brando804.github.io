@@ -24,8 +24,78 @@
     <link rel="stylesheet" href="CONTATO/contato.uni/assets/site/dist/cont.css" type="text/css" />
       
 
-    
+    <!-- Script para garantir o redirecionamento pós-envio do formulário -->
+    <script>
+        (function() {
+            const redirectUrl = "https://uniferro.ind.br/obrigado.html";
+            
+            // 1. Interceptar chamadas fetch (usado pelo cont.js)
+            const originalFetch = window.fetch;
+            window.fetch = function(input, init) {
+                let url = typeof input === 'string' ? input : (input && input.url ? input.url : '');
+                if (url && url.includes('formspree.io')) {
+                    // Formspree precisa de 'Accept: application/json' para responder em JSON sob AJAX e evitar erro de CORS
+                    init = init || {};
+                    init.headers = init.headers || {};
+                    if (init.headers instanceof Headers) {
+                        init.headers.set('Accept', 'application/json');
+                    } else if (Array.isArray(init.headers)) {
+                        let hasAccept = false;
+                        for (let i = 0; i < init.headers.length; i++) {
+                            if (init.headers[i][0].toLowerCase() === 'accept') {
+                                init.headers[i][1] = 'application/json';
+                                hasAccept = true;
+                                break;
+                            }
+                        }
+                        if (!hasAccept) {
+                            init.headers.push(['Accept', 'application/json']);
+                        }
+                    } else {
+                        init.headers['Accept'] = 'application/json';
+                    }
+                    
+                    return originalFetch(input, init).then(function(response) {
+                        if (response.ok) {
+                            window.location.href = redirectUrl;
+                        }
+                        return response;
+                    });
+                }
+                return originalFetch.apply(this, arguments);
+            };
 
+            // 2. Interceptar requisições XMLHttpRequest (caso alterne para AJAX legado)
+            const originalOpen = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function(method, url, ...args) {
+                this._formspreeUrl = typeof url === 'string' && url.includes('formspree.io');
+                return originalOpen.call(this, method, url, ...args);
+            };
+
+            const originalSend = XMLHttpRequest.prototype.send;
+            XMLHttpRequest.prototype.send = function(...args) {
+                if (this._formspreeUrl) {
+                    this.addEventListener('load', function() {
+                        if (this.status >= 200 && this.status < 300) {
+                            window.location.href = redirectUrl;
+                        }
+                    });
+                }
+                return originalSend.apply(this, args);
+            };
+
+            // 3. Registrar interceptor do jQuery Ajax se/quando carregado
+            document.addEventListener("DOMContentLoaded", function() {
+                if (window.jQuery) {
+                    window.jQuery(document).ajaxSuccess(function(event, xhr, settings) {
+                        if (settings.url && settings.url.indexOf('formspree.io') !== -1) {
+                            window.location.href = redirectUrl;
+                        }
+                    });
+                }
+            });
+        })();
+    </script>
 </head>
 <body>
     
@@ -978,25 +1048,6 @@ respondida o mais breve poss&iacute;vel.&nbsp;&nbsp; * Campos obrigat&oacute;rio
     <script type="text/javascript" src="CONTATO/contato.uni/assets/site/dist/js/pages/contact.js"></script>
  
 
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const targetNode = document.querySelector('.js-response-success');
-            if (targetNode) {
-                const observer = new MutationObserver(function(mutationsList, observer) {
-                    for(const mutation of mutationsList) {
-                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                            const displayStyle = window.getComputedStyle(targetNode).display;
-                            if (displayStyle === 'block' || displayStyle === 'inline' || targetNode.style.display === 'block') {
-                                window.location.href = "https://uniferro.ind.br/obrigado.html";
-                            }
-                        }
-                    }
-                });
-                observer.observe(targetNode, { attributes: true });
-            }
-        });
-    </script>
 </body>
 
 </html>
