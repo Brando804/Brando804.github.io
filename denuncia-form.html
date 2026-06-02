@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazer um Relato - Uniferro</title>
+    <base >
+
+    <link rel="icon" href="CONTATO/storage/Geral/cache/icone-UNIFERRO-1-2png_1de93382-5183-4ae7-8e15-ed530223e9c9-144-148.png">
+
+    <link rel="stylesheet" href="CONTATO/cont.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" href="CONTATO/cont.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    <link rel="stylesheet" href="CONTATO/contato.uni/assets/site/dist/cont.css" type="text/css" />
+    <style>
+        html {
+            padding-left: 0 !important;
+        }
+        body {
+            background-color: #f4f6f8;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+        }
+        .header, .contact, .footer {
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+        }
+        .header .nav {
+            padding-left: 3.2rem !important;
+        }
+        
+        .denuncia-form-container {
+            padding: 3rem 5%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .trust-badge {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.15);
+        }
+        /* Custom Checkbox */
+        .custom-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .custom-checkbox input {
+            margin-top: 0.3rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .custom-checkbox label {
+            font-size: 1.4rem;
+            color: #555;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+        
+        /* Modal do Protocolo */
+        .protocol-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 2rem;
+        }
+        .protocol-modal {
+            background: #fff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.3s ease-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            background: #e8f5e9;
+            color: #27ae60;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .success-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+        .protocol-modal h2 {
+            color: #111;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .protocol-modal p {
+            color: #666;
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .protocol-box {
+            background: #f4f6f8;
+            border: 2px dashed #ccc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        #protocolNumber {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #880202;
+            letter-spacing: 2px;
+        }
+        .btn-copy {
+            background: transparent;
+            border: 1px solid #880202;
+            color: #880202;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover {
+            background: #880202;
+            color: #fff;
+        }
+        .btn-primary-modal {
+            background: #880202;
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .trust-badge svg {
+            width: 45px;
+            height: 45px;
+            flex-shrink: 0;
+            fill: #4AE26A;
+        }
+        .trust-badge h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.3rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .trust-badge p {
+            font-size: 1.4rem;
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .form-section {
+            background: #fff;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-section:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+        
+        .form-section h3 {
+            font-size: 1.6rem;
+            color: #880202;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .form-section h3 span {
+            background: #880202;
+            color: white;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .field-group {
+            margin-bottom: 1.8rem;
+        }
+        .field-group:last-child {
+            margin-bottom: 0;
+        }
+        .field-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: #444;
+            font-size: 1.4rem;
+        }
+        
+        .field-group input[type="text"], 
+        .field-group input[type="email"], 
+        .field-group select, 
+        .field-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid #e2e2e2;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        .field-group input:focus, 
+        .field-group select:focus, 
+        .field-group textarea:focus {
+            outline: none;
+            border-color: #880202;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(136, 2, 2, 0.1);
+        }
+        .field-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .identificacao-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .id-card {
+            border: 2px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: #fafafa;
+        }
+        .id-card:hover {
+            border-color: #b5b5b5;
+        }
+        .id-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        .id-card .radio-custom {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .id-card input[type="radio"]:checked + .radio-custom {
+            border-color: #880202;
+        }
+        .id-card input[type="radio"]:checked + .radio-custom::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #880202;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .id-card.active {
+            border-color: #880202;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(136, 2, 2, 0.08);
+        }
+        .id-card-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .id-card-desc {
+            font-size: 1.4rem;
+            color: #666;
+            margin-left: 32px;
+            line-height: 1.4;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-upload-btn {
+            border: 2px dashed #ccc;
+            color: #666;
+            background-color: #fafafa;
+            padding: 2rem;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .file-upload-wrapper:hover .file-upload-btn {
+            border-color: #880202;
+            color: #880202;
+            background-color: rgba(136, 2, 2, 0.02);
+        }
+        .file-upload-wrapper input[type="file"] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .submit-btn {
+            background: #880202;
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(136, 2, 2, 0.3);
+        }
+        .submit-btn:hover {
+            background: #6a0101;
+            box-shadow: 0 6px 20px rgba(136, 2, 2, 0.4);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .identificacao-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header__inner { flex-direction: column; align-items: center; padding: 1rem; }
+            .nav { margin-top: 1rem; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+            .nav__item { margin-right: 0 !important; }
+            .hero { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2rem; }
+            .form-container { padding: 1.5rem; margin-top: -3rem; margin-left: 1rem; margin-right: 1rem; }
+            .identificacao-cards { flex-direction: column; gap: 1rem; }
+            .field-group input, .field-group select, .field-group textarea { width: 100%; box-sizing: border-box; }
+            .field-group[style*="min-width: 250px"] { min-width: 100% !important; }
+            .protocol-modal { padding: 2rem 1.5rem; }
+            .protocol-box { flex-direction: column; gap: 1rem; }
+            #protocolNumber { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header ">
+        <ul class="nav">
+            <li class="nav__item" style="margin-right: 2rem;">
+                <a href="denuncia.html">
+                    <img src="HOME/index.home/storage/Geral/cache/vectorpng_e6055350-9b59-40fe-8a7a-aa4a3119b350-387-51.png" alt="Uniferro" style="height: 35px; width: auto; max-width: 150px; object-fit: contain;">
+                </a>
+            </li>
+            <li class="nav__item nav__item--bold">
+                <a href="denuncia-form.html" class="nav__link">Fazer Denúncia</a>
+            </li>
+            <li class="nav__item nav__item--bold">
+                <a href="denuncia-acompanhar.html" class="nav__link">Acompanhar</a>
+            </li>
+            <li class="nav__item"><a href="contato.html" class="nav__link">Contato</a></li>
+        </ul>
+        <ul class="nav">
+            <li>
+                <a href="denuncia-admin-login.html" style="background: #880202; color: white; padding: 1rem 2.5rem; font-size: 1.4rem; font-weight: bold; border-radius: 4px; border: 2px solid #880202; transition: all 0.3s; display: inline-block;">Entrar</a>
+            </li>
+        </ul>
+        <div class="nav-mobile">
+            <ul class="nav-list">
+                <li>
+                    <a href="index.html">
+                        <img class="logo" src="storage/Geral/cache/vectorpng_e6055350-9b59-40fe-8a7a-aa4a3119b350-387-51.webp" alt>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="contact" id="contact">
+        <div class="contact__banner">
+            <div class="contact__banner__bg">
+                <img src="CONTATO/storage/Contato/cache/trucks-atendimentopng_a040dc04-22f3-4e89-87e1-48f2ea2652b2-672-407.png" alt="">
+            </div>
+            <div class="contact__banner__content">
+                <p class="date text-opacity text-14">Compliance</p>
+                <h1 class="text-white text-56 font-medium spacing-1">Fazer Relato</h1>
+            </div>
+        </div>
+
+        <div class="denuncia-form-container">
+            
+            <div class="trust-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                </svg>
+                <div>
+                    <h2>Ambiente 100% Seguro e Sigiloso</h2>
+                    <p>Você está em um canal protegido. Suas informações são criptografadas e seu <strong>anonimato é garantido por lei</strong> caso deseje não se identificar.</p>
+                </div>
+            </div>
+            
+            <form action="#" method="POST" id="denunciaForm">
+                <div class="form-section">
+                    <h3><span>1</span> Relação com a empresa</h3>
+                    <div class="field-group">
+                        <label for="relacao">Qual é a sua relação atual ou passada com a Uniferro?</label>
+                        <select name="relacao" id="relacao" required>
+                            <option value="" disabled selected>Selecione uma opção...</option>
+                            <option value="Colaborador">Sou Colaborador</option>
+                            <option value="Ex-colaborador">Sou Ex-colaborador</option>
+                            <option value="Fornecedor">Sou Fornecedor / Parceiro de Negócios</option>
+                            <option value="Cliente">Sou Cliente</option>
+                            <option value="Comunidade">Comunidade</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><span>2</span> Identificação (Opcional)</h3>
+                    <p style="margin-bottom: 1.5rem; color:#666; font-size: 1.4rem;">Você tem a liberdade de escolher se deseja revelar sua identidade. Relatos anônimos são tratados com a mesma seriedade.</p>
+                    
+                    <div class="identificacao-cards">
+                        <label class="id-card active" id="cardAnonimo">
+                            <div class="id-card-title">
+                                <input type="radio" name="identificar" value="nao" checked>
+                                <span class="radio-custom"></span>
+                                Relato Anônimo
+                            </div>
+                            <div class="id-card-desc">Nenhum dado pessoal será solicitado ou rastreado. Garantia total de sigilo.</div>
+                        </label>
+                        
+                        <label class="id-card" id="cardIdentificado">
+                            <div class="id-card-title">
+                                <input type="radio" name="identificar" value="sim">
+                                <span class="radio-custom"></span>
+                                Quero me Identificar
+                            </div>
+                            <div class="id-card-desc">Meus dados ficarão sob sigilo absoluto, apenas a equipe de apuração terá acesso.</div>
+                        </label>
+                    </div>
+                    
+                    <div id="formIdentificado" class="hidden">
+                        <div style="background:#f4f6f8; padding: 1.5rem; border-radius:8px; border:1px solid #e2e2e2;">
+                            <div class="field-group">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" id="nome" name="nome" placeholder="Como podemos chamá-lo?">
+                            </div>
+                            <div class="field-group">
+                                <label for="email">E-mail pessoal (Não use e-mail corporativo se preferir privacidade)</label>
+                                <input type="email" id="email" name="email" placeholder="seu-email@exemplo.com">
+                            </div>
+                            <div class="field-group">
+                                <label for="telefone">Telefone / Celular</label>
+                                <input type="text" id="telefone" name="telefone" placeholder="(  ) _____-____">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><span>3</span> Detalhes do Ocorrido</h3>
+                    
+                    <div class="field-group">
+                        <label for="assunto">Qual é o assunto principal do seu relato?</label>
+                        <select name="assunto" id="assunto" required>
+                            <option value="" disabled selected>Selecione o tipo de infração...</option>
+                            <option value="Fraude">Fraude, Corrupção ou Desvio</option>
+                            <option value="Assedio">Assédio Moral, Sexual ou Discriminação</option>
+                            <option value="Seguranca">Violação de Segurança do Trabalho (NRs)</option>
+                            <option value="MeioAmbiente">Impacto ao Meio Ambiente</option>
+                            <option value="Conflito">Conflito de Interesses</option>
+                            <option value="Outros">Outros descumprimentos do Código de Conduta</option>
+                        </select>
+                    </div>
+                    
+                    <div class="field-group">
+                        <label for="descricao">Descreva os fatos com o máximo de detalhes</label>
+                        <p style="font-size:1.4rem; color:#888; margin-bottom:0.8rem;">Tente responder: <strong>O quê</strong> aconteceu? <strong>Quem</strong> está envolvido? <strong>Quando</strong> e <strong>Onde</strong> ocorreu? Há testemunhas?</p>
+                        <textarea id="descricao" name="descricao" placeholder="Escreva seu relato confidencial aqui..." required></textarea>
+                    </div>
+                    
+                    <div class="field-group">
+                        <label>Deseja anexar evidências? (Opcional)</label>
+                        <p style="font-size:1.4rem; color:#888; margin-bottom:0.8rem;">Você pode enviar fotos, documentos (PDF, DOC), vídeos ou áudios que comprovem o relato.</p>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="anexos" name="anexos" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.mp3,.mp4">
+                            <div class="file-upload-btn">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                                </svg>
+                                <span>Clique aqui para escolher os arquivos ou arraste-os para cá</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Enviar Relato com Segurança
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__bottom">
+            <p>© 2026 Uniferro. Canal de Denúncias Seguro e Confidencial.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Protocolo -->
+    <div class="protocol-modal-overlay" id="protocolModal">
+        <div class="protocol-modal">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h2>Relato Enviado com Sucesso!</h2>
+            <p>Sua denúncia foi registrada de forma segura. Guarde o número de protocolo abaixo para poder acompanhar o andamento.</p>
+            
+            <div class="protocol-box">
+                <span id="protocolNumber"></span>
+                <button type="button" class="btn-copy" onclick="copyProtocol()">Copiar</button>
+            </div>
+            <div id="copyAlert" style="color: #27ae60; font-size: 1.4rem; font-weight: bold; margin-bottom: 2rem; display: none;">Protocolo copiado para a área de transferência!</div>
+            
+            <button type="button" class="btn-primary-modal" onclick="closeProtocolModal()">Concluir</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { db, collection, addDoc } from './firebase-config.js';
+
+        // Lógica de alternância de abas (Anônimo / Identificado)
+        document.getElementById('cardAnonimo').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('cardIdentificado').classList.remove('active');
+            document.getElementById('formIdentificado').style.display = 'none';
+        });
+
+        document.getElementById('cardIdentificado').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('cardAnonimo').classList.remove('active');
+            document.getElementById('formIdentificado').style.display = 'block';
+        });
+
+        // Envio para Firebase
+        document.getElementById('denunciaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.querySelector('.submit-btn');
+            btn.innerText = "Enviando com segurança...";
+            btn.disabled = true;
+
+            const isAnonimo = document.querySelector('input[name="identificar"]:checked').value === 'nao';
+            const assuntoSelect = document.getElementById('assunto');
+            const relacaoSelect = document.getElementById('relacao');
+            const protocolo = Math.floor(Math.random() * 9000000000) + 1000000000;
+            
+            const novoRelato = {
+                protocolo: protocolo.toString(),
+                data: new Date().toLocaleDateString('pt-BR') + ' - ' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
+                timestamp: Date.now(),
+                assunto: assuntoSelect.options[assuntoSelect.selectedIndex].text,
+                relacao: relacaoSelect.options[relacaoSelect.selectedIndex].text,
+                idType: isAnonimo ? 'Anônimo' : 'Identificado',
+                status: 'Novo',
+                desc: document.getElementById('descricao').value,
+                nome: isAnonimo ? 'N/A (Anônimo)' : document.getElementById('nome').value,
+                email: isAnonimo ? 'N/A' : (document.getElementById('email').value || 'Não informado'),
+                tel: isAnonimo ? 'N/A' : (document.getElementById('telefone').value || 'Não informado')
+            };
+
+            try {
+                await setDoc(doc(db, "reports", protocolo), novoRelato);
+                document.getElementById('protocolNumber').innerText = protocolo;
+                document.getElementById('protocolModal').style.display = 'flex';
+                this.reset();
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                alert("Falha de conexão com o servidor. Tente novamente.");
+            } finally {
+                btn.innerHTML = 'Enviar Relato com Segurança <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+                btn.disabled = false;
+            }
+        });
+
+        window.copyProtocol = function() {
+            const protocolo = document.getElementById('protocolNumber').innerText;
+            navigator.clipboard.writeText(protocolo).then(() => {
+                const alertMsg = document.getElementById('copyAlert');
+                alertMsg.style.display = 'block';
+                setTimeout(() => { alertMsg.style.display = 'none'; }, 3000);
+            });
+        };
+
+        window.closeProtocolModal = function() {
+            document.getElementById('protocolModal').style.display = 'none';
+            window.location.href = 'denuncia-acompanhar.html';
+        };
+    </script>
+</body>
+</html>

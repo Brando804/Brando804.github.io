@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Restrito - Comitê de Conduta</title>
+    
+    <link rel="icon" href="CONTATO/storage/Geral/cache/icone-UNIFERRO-1-2png_1de93382-5183-4ae7-8e15-ed530223e9c9-144-148.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0d0d0d;
+            background-image: linear-gradient(135deg, #111 0%, #000 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .login-container {
+            background: #1a1a1a;
+            padding: 4rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            width: 100%;
+            max-width: 420px;
+            border-top: 5px solid #880202;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container img {
+            width: 180px;
+            margin-bottom: 2rem;
+        }
+
+        .login-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #eee;
+        }
+        
+        .login-container p {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 2.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #333;
+            background: #2a2a2a;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #880202;
+            background: #333;
+        }
+
+        .btn-login {
+            background: #880202;
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            background: #a30202;
+        }
+        
+        .error-msg {
+            color: #ff4c4c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .secure-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: #666;
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .login-container { width: 90%; padding: 2rem 1.5rem; }
+            .login-container h1 { font-size: 1.8rem; }
+            input { width: 100%; box-sizing: border-box; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- We use the same logo image used in the main site -->
+        <img src="HOME/index.home/storage/Geral/cache/vectorpng_e6055350-9b59-40fe-8a7a-aa4a3119b350-387-51.png" alt="Uniferro">
+        <h1>Acesso Restrito</h1>
+        <p>Painel de Gestão de Conduta e Denúncias</p>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" autocomplete="off" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" autocomplete="off" required>
+            </div>
+            
+            <button type="button" id="loginBtn" class="btn-login">Entrar Seguramente</button>
+            <div id="errorMsg" class="error-msg">Usuário ou senha incorretos.</div>
+        </form>
+        
+        <div class="secure-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            Conexão Criptografada e Monitorada
+        </div>
+        
+        <div style="margin-top: 2.5rem;">
+            <a href="denuncia.html" style="color: #666; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#666'">← Voltar ao Portal Público</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from './firebase-config.js';
+
+        document.getElementById('loginBtn').addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+            
+            // Lógica de Rate Limiting (3h block, 5 tentativas)
+            const BLOCK_TIME = 10800000;
+            const MAX_ATTEMPTS = 5;
+            
+            let blockUntil = localStorage.getItem('login_block_until');
+            if (blockUntil && Date.now() < parseInt(blockUntil)) {
+                const remainingMinutes = Math.ceil((parseInt(blockUntil) - Date.now()) / 60000);
+                document.getElementById('errorMsg').innerHTML = `<strong>ACESSO BLOQUEADO</strong><br>Por motivo de segurança contra força bruta, o login foi suspenso no seu IP.<br>Tente novamente em ${remainingMinutes} minuto(s).`;
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+
+            btn.innerText = "Autenticando...";
+            btn.disabled = true;
+
+            try {
+                // Firebase Auth real
+                await signInWithEmailAndPassword(auth, user, pass);
+                
+                // Sucesso
+                localStorage.removeItem('login_attempts');
+                window.location.href = 'denuncia-admin-dashboard.html';
+            } catch (error) {
+                // Falha
+                let attempts = parseInt(localStorage.getItem('login_attempts')) || 0;
+                attempts++;
+                
+                if (attempts >= MAX_ATTEMPTS) {
+                    localStorage.setItem('login_block_until', Date.now() + BLOCK_TIME);
+                    document.getElementById('errorMsg').innerHTML = `<strong>LIMITE EXCEDIDO</strong><br>Por segurança, o acesso administrativo foi bloqueado por 3 horas.`;
+                } else {
+                    localStorage.setItem('login_attempts', attempts);
+                    document.getElementById('errorMsg').innerText = `Credenciais inválidas. Tentativa ${attempts} de ${MAX_ATTEMPTS}.`;
+                }
+                alert("Erro Firebase: " + error.message);
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('password').value = '';
+                btn.innerText = "Entrar no Painel Seguro";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
