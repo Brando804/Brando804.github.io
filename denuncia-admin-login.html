@@ -164,7 +164,7 @@
         </div>
         
         <div style="margin-top: 2.5rem;">
-            <a href="denuncia.html" style="color: #666; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#666'">← Voltar ao Portal Público</a>
+            <a href="denuncia" style="color: #666; text-decoration: none; font-size: 0.9rem; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#666'">← Voltar ao Portal Público</a>
         </div>
     </div>
 
@@ -199,7 +199,7 @@
                 
                 // Sucesso
                 localStorage.removeItem('login_attempts');
-                window.location.href = 'denuncia-admin-dashboard.html';
+                window.location.href = 'denuncia-admin-dashboard';
             } catch (error) {
                 // Falha
                 let attempts = parseInt(localStorage.getItem('login_attempts')) || 0;
