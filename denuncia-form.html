@@ -647,7 +647,7 @@
             };
 
             try {
-                await setDoc(doc(db, "reports", protocolo), novoRelato);
+                await setDoc(doc(db, "reports", protocolo.toString()), novoRelato);
                 document.getElementById('protocolNumber').innerText = protocolo;
                 document.getElementById('protocolModal').style.display = 'flex';
                 this.reset();
