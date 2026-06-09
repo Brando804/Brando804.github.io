@@ -730,6 +730,18 @@
             }
             document.getElementById('modRelator').innerHTML = relatorInfo;
             
+            // Exibir anexos
+            const anexosGroup = document.getElementById('modAnexosGroup');
+            const anexosDiv = document.getElementById('modAnexos');
+            if(report.anexos && report.anexos.length > 0) {
+                anexosGroup.style.display = 'block';
+                let links = report.anexos.map(a => `<a href="${a.url}" target="_blank" style="display:block; margin-bottom:5px; color:#0066cc; text-decoration:underline;">Ver ${a.name}</a>`).join('');
+                anexosDiv.innerHTML = links;
+            } else {
+                anexosGroup.style.display = 'none';
+                anexosDiv.innerHTML = '';
+            }
+            
             document.getElementById('newStatus').value = report.status;
             document.getElementById('modalOverlay').style.display = 'flex';
         };
@@ -811,6 +823,15 @@
                         <h3>3. Descrição Detalhada dos Fatos</h3>
                         <div class="data-box" style="white-space: pre-wrap;">${report.desc}</div>
                     </div>
+                    
+                    ${report.anexos && report.anexos.length > 0 ? `
+                    <div class="section">
+                        <h3>4. Evidências Anexadas</h3>
+                        <div class="data-box">
+                            ${report.anexos.map(a => `<a href="${a.url}" target="_blank" style="color:#0066cc;">${a.name}</a>`).join('<br>')}
+                        </div>
+                    </div>
+                    ` : ''}
                     
                     <div style="margin-top: 60px; font-size: 11px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
                         Gerado pelo Painel de Gestão - Uniferro<br>
