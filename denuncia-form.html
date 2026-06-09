@@ -470,7 +470,7 @@
                 </div>
             </div>
             
-            <form action="#" method="POST" id="denunciaForm">
+            <form id="denunciaForm" onsubmit="event.preventDefault();">
                 <div class="form-section">
                     <h3><span>1</span> Relação com a empresa</h3>
                     <div class="field-group">
@@ -604,7 +604,7 @@
 
     <!-- Scripts -->
     <script type="module">
-        import { db, collection, addDoc } from './firebase-config.js';
+        import { db, collection, setDoc, doc } from './firebase-config.js';
 
         // Lógica de alternância de abas (Anônimo / Identificado)
         document.getElementById('cardAnonimo').addEventListener('click', function() {
