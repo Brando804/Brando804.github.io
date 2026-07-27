@@ -8,7 +8,33 @@
 </HEAD>
 <BODY>
 <A HREF="index.html"><h3>Click here...</h3></A>
-</BODY>
+<style>
+  /* GTranslate Fixes and Removal of Old Buttons */
+  .btn--primary.js-open-submenu,
+  .nav__submenu--search,
+  .btn--outlined.js-open-submenu,
+  .nav__submenu--lang,
+  .js-toggle-mobile-search, 
+  .mobile-search {
+      display: none !important;
+  }
+  .gtranslate_wrapper {
+      position: absolute;
+      top: 30px;
+      right: 5%;
+      z-index: 9999;
+  }
+  @media (max-width: 991px) {
+      .gtranslate_wrapper {
+          top: 15px;
+          right: 60px;
+      }
+  }
+</style>
+<div class="gtranslate_wrapper"></div>
+<script>window.gtranslateSettings = {"default_language":"pt","languages":["pt","en","es"],"wrapper_selector":".gtranslate_wrapper","alt_flags":{"en":"usa","pt":"brazil"}}</script>
+<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+</body>
 <!-- Created by HTTrack Website Copier/3.49-2 [XR&CO'2014] -->
 
 <!-- Mirrored from randon.com.br/storage/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 Dec 2024 22:32:47 GMT -->
