@@ -169,7 +169,14 @@
     </div>
 
     <script type="module">
-        import { auth, signInWithEmailAndPassword } from './firebase-config.js';
+        import { auth, signInWithEmailAndPassword, onAuthStateChanged } from './firebase-config.js';
+
+        // Redireciona se já estiver logado
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.location.href = 'denuncia-admin-dashboard.html';
+            }
+        });
 
         document.getElementById('loginBtn').addEventListener('click', async function(e) {
             e.preventDefault();
@@ -199,7 +206,7 @@
                 
                 // Sucesso
                 localStorage.removeItem('login_attempts');
-                window.location.href = 'denuncia-admin-dashboard';
+                window.location.href = 'denuncia-admin-dashboard.html';
             } catch (error) {
                 // Falha
                 let attempts = parseInt(localStorage.getItem('login_attempts')) || 0;

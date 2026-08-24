@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Comitê de Conduta</title>
     
@@ -18,7 +21,7 @@
         body {
             background-color: #f4f6f8;
             color: #333;
-            display: flex;
+            display: none; /* Oculto por padrão para segurança de autenticação */
             min-height: 100vh;
         }
 
@@ -564,13 +567,18 @@
         // Check if user is logged in
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = 'denuncia-admin-login';
+                window.location.href = 'denuncia-admin-login.html';
+            } else {
+                document.body.style.display = 'flex';
             }
         });
 
         window.logout = function() {
             signOut(auth).then(() => {
-                window.location.href = 'denuncia-admin-login';
+                window.location.href = 'denuncia-admin-login.html';
+            }).catch((err) => {
+                console.error("Erro ao fazer logout: ", err);
+                window.location.href = 'denuncia-admin-login.html';
             });
         };
 
