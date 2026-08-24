@@ -837,42 +837,7 @@
                         Gerado pelo Painel de Gestão - Uniferro<br>
                         ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}
                     </div>
-                <style>
-  /* GTranslate Fixes and Removal of Old Buttons */
-  .btn--primary.js-open-submenu,
-  .nav__submenu--search,
-  .btn--outlined.js-open-submenu,
-  .nav__submenu--lang,
-  .js-toggle-mobile-search, 
-  .mobile-search {
-      display: none !important;
-  }
-  .gtranslate_wrapper {
-      position: absolute;
-      top: 30px;
-      right: 5%;
-      z-index: 9999;
-  }
-  @media (max-width: 991px) {
-      .gtranslate_wrapper {
-          top: 15px;
-          right: 60px;
-      }
-  }
-  .gtranslate_wrapper select,
-  .gtranslate_wrapper a.gt_selector,
-  .gtranslate_wrapper .gt_selector {
-      border: 2px solid #880202 !important;
-      border-radius: 20px !important;
-      padding: 2px 5px !important;
-      outline: none !important;
-      background-color: transparent !important;
-  }
-</style>
-<div class="gtranslate_wrapper"></div>
-<script>window.gtranslateSettings = {"default_language":"pt","languages":["pt","en","es"],"wrapper_selector":".gtranslate_wrapper","alt_flags":{"en":"usa","pt":"brazil"}}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
-</body>
+                </body>
                 </html>
             `);
             printWindow.document.close();
@@ -884,23 +849,22 @@
         };
 
         window.saveStatus = async function() {
-            if(currentActiveId) {
-                const newStatus = document.getElementById('newStatus').value;
-                const reportRef = doc(db, "reports", currentActiveId);
+            if (!currentActiveId) return;
+            const newStatus = document.getElementById('newStatus').value;
+            const reportRef = doc(db, "reports", currentActiveId);
+            
+            try {
+                const btn = document.querySelector('.btn-save');
+                btn.innerText = 'Salvando...';
+                await updateDoc(reportRef, { status: newStatus });
                 
-                try {
-                    const btn = document.querySelector('.btn-save');
-                    btn.innerText = 'Salvando...';
-                    await updateDoc(reportRef, { status: newStatus });
-                    
-                    window.closeModal();
-                    alert("Status atualizado com sucesso no banco de dados.");
-                } catch(e) {
-                    console.error("Erro ao atualizar status: ", e);
-                    alert("Falha de permissão ou conexão com o servidor seguro.");
-                } finally {
-                    document.querySelector('.btn-save').innerText = 'Salvar Alteração';
-                }
+                window.closeModal();
+                alert("Status atualizado com sucesso no banco de dados.");
+            } catch(e) {
+                console.error("Erro ao atualizar status: ", e);
+                alert("Falha de permissão ou conexão com o servidor seguro.");
+            } finally {
+                document.querySelector('.btn-save').innerText = 'Salvar Alteração';
             }
         };
 
